@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Glitch Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Glitch Generator</h1>
+
+        <label class="file-upload">
+            Upload Image
+            <input type="file" id="imageInput" accept="image/*">
+        </label>
+
+        <label>
+            Number of Glitch Variants: <span id="variantCountValue">5</span>
+            <input type="range" id="variantCount" min="1" max="50" value="5">
+        </label>
+
+        <label>
+            Palette Size: <span id="paletteSizeValue">6</span>
+            <input type="range" id="paletteSize" min="2" max="16" value="6">
+        </label>
+
+        <label>
+            R Modulo: <span id="rModValue">225</span>
+            <input type="range" id="rMod" min="1" max="300" value="225">
+        </label>
+
+        <label>
+            G Modulo: <span id="gModValue">185</span>
+            <input type="range" id="gMod" min="1" max="300" value="185">
+        </label>
+
+        <label>
+            B Modulo: <span id="bModValue">240</span>
+            <input type="range" id="bMod" min="1" max="300" value="240">
+        </label>
+
+        <div id="progressOverlay" class="progress-overlay">Generating: 1 / 5</div>
+
+        <button id="generateBtn">Generate Glitches</button>
+
+        <div id="results" class="results"></div>
+    </div>
+
+    <script src="glitch.js"></script>
+</body>
+</html>
