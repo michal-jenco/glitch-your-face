@@ -4,7 +4,9 @@ A simple website that uses my custom image glitching algorithm to glitch images
 Usually works best on close-up potrraits with smooth gradients and a lot of similar-colored areas. Busy photos usually come out weird.
 But also images of space come out great!
 
-check out https://jsfiddle.net/pepekbezlepek/Ly8nd97j/32 to play with the code live
+https://michal-jenco.github.io/glitch-your-face/
+
+https://jsfiddle.net/pepekbezlepek/Ly8nd97j/32 to play with the code live
 
 <img width="2532" height="1205" alt="image" src="https://github.com/user-attachments/assets/f9f254dd-da4d-4693-978f-222b9f1171da" />
 
