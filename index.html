@@ -7,106 +7,116 @@
 </head>
 <body>
 <div class="container">
-    <h1>Glitch Generator</h1>
 
-    <label class="file-upload">
-        Upload Image
-        <input type="file" id="imageInput" accept="image/*">
-    </label>
+    <header>
+        <h1>Glitch Generator</h1>
+    </header>
 
-    <label>
-        Number of Glitch Variants: <span id="variantCountValue">5</span>
-        <input type="range" id="variantCount" min="1" max="50" value="5">
-    </label>
+    <div class="main">
+        <!-- Left column: output images -->
+        <div class="output">
+            <div id="progressOverlay" class="progress-overlay">Generating...</div>
+            <div id="results" class="results"></div>
+        </div>
 
-    <label>
-        Palette Size: <span id="paletteSizeValue">4</span>
-        <input type="range" id="paletteSize" min="2" max="16" value="4">
-    </label>
+        <!-- Right column: controls -->
+        <div class="controls" id="controls">
+            <label class="file-upload">
+                Upload Image
+                <input type="file" id="imageInput" accept="image/*">
+            </label>
 
-    <label>
-    R Cycle (was 14): <span id="rCycleValue">14</span>
-    <input type="range" id="rCycle" min="1" max="100" value="14">
-    </label>
+            <label>
+                Number of Glitch Variants: <span id="variantCountValue">5</span>
+                <input type="range" id="variantCount" min="1" max="50" value="5">
+            </label>
 
-    <label>
-        H Cycle (was 55): <span id="hCycleValue">55</span>
-        <input type="range" id="hCycle" min="1" max="255" value="55">
-    </label>
+            <label>
+                Palette Size: <span id="paletteSizeValue">4</span>
+                <input type="range" id="paletteSize" min="2" max="16" value="4">
+            </label>
 
-    <!-- Modulo sliders -->
-    <label>
-        R Modulo: <span id="rModValue">225</span>
-        <input type="range" id="rMod" min="1" max="300" value="225">
-    </label>
-    <label>
-        G Modulo: <span id="gModValue">185</span>
-        <input type="range" id="gMod" min="1" max="300" value="185">
-    </label>
-    <label>
-        B Modulo: <span id="bModValue">240</span>
-        <input type="range" id="bMod" min="1" max="300" value="240">
-    </label>
+            <h3>Modulo</h3>
+            <label>
+                R Modulo: <span id="rModValue">225</span>
+                <input type="range" id="rMod" min="1" max="300" value="225">
+            </label>
+            <label>
+                G Modulo: <span id="gModValue">185</span>
+                <input type="range" id="gMod" min="1" max="300" value="185">
+            </label>
+            <label>
+                B Modulo: <span id="bModValue">240</span>
+                <input type="range" id="bMod" min="1" max="300" value="240">
+            </label>
 
-    <!-- Offsets -->
-    <label>
-        W Offset: <span id="wOffsetValue">0</span>
-        <input type="range" id="wOffset" min="-50" max="50" value="0">
-    </label>
-    <label>
-        H Offset: <span id="hOffsetValue">0</span>
-        <input type="range" id="hOffset" min="-50" max="50" value="0">
-    </label>
-    <label>
-        I Offset: <span id="iOffsetValue">0</span>
-        <input type="range" id="iOffset" min="-50" max="50" value="0">
-    </label>
+            <h3>Offsets</h3>
+            <label>
+                W Offset: <span id="wOffsetValue">0</span>
+                <input type="range" id="wOffset" min="-50" max="50" value="0">
+            </label>
+            <label>
+                H Offset: <span id="hOffsetValue">0</span>
+                <input type="range" id="hOffset" min="-50" max="50" value="0">
+            </label>
+            <label>
+                I Offset: <span id="iOffsetValue">0</span>
+                <input type="range" id="iOffset" min="-50" max="50" value="0">
+            </label>
 
-    <!-- Multipliers -->
-    <label>
-        R Multiplier: <span id="rMultValue">1</span>
-        <input type="range" id="rMult" min="0.1" max="5" step="0.1" value="1">
-    </label>
-    <label>
-        G Multiplier: <span id="gMultValue">1</span>
-        <input type="range" id="gMult" min="0.1" max="5" step="0.1" value="1">
-    </label>
-    <label>
-        B Multiplier: <span id="bMultValue">1</span>
-        <input type="range" id="bMult" min="0.1" max="5" step="0.1" value="1">
-    </label>
-    <label>
-        W Multiplier: <span id="wMultValue">1</span>
-        <input type="range" id="wMult" min="0.1" max="5" step="0.1" value="1">
-    </label>
-    <label>
-        H Multiplier: <span id="hMultValue">1</span>
-        <input type="range" id="hMult" min="0.1" max="5" step="0.1" value="1">
-    </label>
-    <label>
-        I Multiplier: <span id="iMultValue">1</span>
-        <input type="range" id="iMult" min="0.1" max="5" step="0.1" value="1">
-    </label>
+            <h3>Multipliers</h3>
+            <label>
+                R Multiplier: <span id="rMultValue">1</span>
+                <input type="range" id="rMult" min="0.1" max="5" step="0.1" value="1">
+            </label>
+            <label>
+                G Multiplier: <span id="gMultValue">1</span>
+                <input type="range" id="gMult" min="0.1" max="5" step="0.1" value="1">
+            </label>
+            <label>
+                B Multiplier: <span id="bMultValue">1</span>
+                <input type="range" id="bMult" min="0.1" max="5" step="0.1" value="1">
+            </label>
+            <label>
+                W Multiplier: <span id="wMultValue">1</span>
+                <input type="range" id="wMult" min="0.1" max="5" step="0.1" value="1">
+            </label>
+            <label>
+                H Multiplier: <span id="hMultValue">1</span>
+                <input type="range" id="hMult" min="0.1" max="5" step="0.1" value="1">
+            </label>
+            <label>
+                I Multiplier: <span id="iMultValue">1</span>
+                <input type="range" id="iMult" min="0.1" max="5" step="0.1" value="1">
+            </label>
 
-    <!-- Random noise -->
-    <label>
-        R Random: <span id="rRandValue">0</span>
-        <input type="range" id="rRand" min="0" max="50" value="0">
-    </label>
-    <label>
-        G Random: <span id="gRandValue">0</span>
-        <input type="range" id="gRand" min="0" max="50" value="0">
-    </label>
-    <label>
-        B Random: <span id="bRandValue">0</span>
-        <input type="range" id="bRand" min="0" max="50" value="0">
-    </label>
+            <h3>Random Noise</h3>
+            <label>
+                R Random: <span id="rRandValue">0</span>
+                <input type="range" id="rRand" min="0" max="50" value="0">
+            </label>
+            <label>
+                G Random: <span id="gRandValue">0</span>
+                <input type="range" id="gRand" min="0" max="50" value="0">
+            </label>
+            <label>
+                B Random: <span id="bRandValue">0</span>
+                <input type="range" id="bRand" min="0" max="50" value="0">
+            </label>
 
-    <div id="progressOverlay" class="progress-overlay">Generating...</div>
+            <h3>Cycles</h3>
+            <label>
+                R Cycle: <span id="rCycleValue">14</span>
+                <input type="range" id="rCycle" min="1" max="100" value="14">
+            </label>
+            <label>
+                H Cycle: <span id="hCycleValue">55</span>
+                <input type="range" id="hCycle" min="1" max="255" value="55">
+            </label>
 
-    <button id="generateBtn">Generate Glitches</button>
-
-    <div id="results" class="results"></div>
+            <button id="generateBtn">Generate Glitches</button>
+        </div>
+    </div>
 </div>
 
 <script src="glitch.js"></script>
