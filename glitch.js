@@ -3,62 +3,30 @@ function mod(n, m) {
     return ((n % m) + m) % m;
 }
 
-// Glitch displacement function with dynamic modulo values
+// Mimic Python's random.randint(a,b)
+function randint(a, b) {
+    return Math.floor(Math.random() * (b - a + 1)) + a;
+}
+
+// Generate random palette (like Python generate_palette)
+function generatePalette(size, floor = 0, ceiling = 255) {
+    const palette = [];
+    for (let i = 0; i < size; i++) {
+        const r = randint(floor, ceiling);
+        const g = randint(floor, ceiling);
+        const b = randint(floor, ceiling);
+        palette.push(r, g, b);
+    }
+    return palette;
+}
+
 function displacementFunc(r, g, b, w, h, i, rMod, gMod, bMod) {
-    const newR = mod(r + ((w + 1 + i) % 14), rMod);
-    const newG = mod(g + h - i, gMod);
-    const newB = mod(b + (h % 55) - w, bMod);
+    const newR = (r + ((w + 1 + i) % 14)) % rMod;
+    const newG = (g + h - i) % gMod;
+    const newB = (b + (h % 55) - w) % bMod;
     return [newR, newG, newB];
 }
 
-// Palette reduction
-function quantizeImage(imageData, paletteSize = 6) {
-    const pixels = [];
-    const data = imageData.data;
-
-    for (let i = 0; i < data.length; i += 4) {
-        pixels.push([data[i], data[i + 1], data[i + 2]]);
-    }
-
-    const clusters = [];
-    for (let i = 0; i < paletteSize; i++) {
-        clusters.push(pixels[Math.floor(Math.random() * pixels.length)]);
-    }
-
-    const maxIter = 10;
-    for (let iter = 0; iter < maxIter; iter++) {
-        const newClusters = clusters.map(c => [0,0,0,0]);
-        pixels.forEach(p => {
-            let minDist = Infinity, idx = 0;
-            clusters.forEach((c,j) => {
-                const d = (p[0]-c[0])**2 + (p[1]-c[1])**2 + (p[2]-c[2])**2;
-                if(d < minDist){ minDist=d; idx=j;}
-            });
-            newClusters[idx][0]+=p[0]; newClusters[idx][1]+=p[1]; newClusters[idx][2]+=p[2]; newClusters[idx][3]+=1;
-        });
-        clusters.forEach((c,i)=>{
-            if(newClusters[i][3]>0){
-                c[0]=Math.floor(newClusters[i][0]/newClusters[i][3]);
-                c[1]=Math.floor(newClusters[i][1]/newClusters[i][3]);
-                c[2]=Math.floor(newClusters[i][2]/newClusters[i][3]);
-            }
-        });
-    }
-
-    // Map pixels to nearest cluster
-    for (let i = 0; i < pixels.length; i++) {
-        let minDist = Infinity, idx=0;
-        clusters.forEach((c,j)=>{
-            const d=(pixels[i][0]-c[0])**2+(pixels[i][1]-c[1])**2+(pixels[i][2]-c[2])**2;
-            if(d<minDist){minDist=d; idx=j;}
-        });
-        data[i*4]=clusters[idx][0];
-        data[i*4+1]=clusters[idx][1];
-        data[i*4+2]=clusters[idx][2];
-    }
-
-    return imageData;
-}
 
 // Apply glitch effect
 function glitchImage(img, i, rMod, gMod, bMod, paletteSize) {
@@ -68,22 +36,48 @@ function glitchImage(img, i, rMod, gMod, bMod, paletteSize) {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(img, 0, 0);
 
-    const imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
 
-    for(let w=0; w<canvas.width; w++){
-        for(let h=0; h<canvas.height; h++){
-            const idx=(h*canvas.width+w)*4;
-            const r=data[idx], g=data[idx+1], b=data[idx+2];
-            const [nr, ng, nb]=displacementFunc(r,g,b,w,h,i,rMod,gMod,bMod);
-            data[idx]=nr; data[idx+1]=ng; data[idx+2]=nb;
+    // Apply displacement
+    for (let w = 0; w < canvas.width; w++) {
+        for (let h = 0; h < canvas.height; h++) {
+            const idx = (h * canvas.width + w) * 4;
+            const r = data[idx], g = data[idx + 1], b = data[idx + 2];
+            const [nr, ng, nb] = displacementFunc(r, g, b, w, h, i, rMod, gMod, bMod);
+            data[idx] = nr;
+            data[idx + 1] = ng;
+            data[idx + 2] = nb;
         }
     }
 
-    ctx.putImageData(imageData, 0,0);
+    ctx.putImageData(imageData, 0, 0);
 
-    const reduced = quantizeImage(ctx.getImageData(0,0,canvas.width,canvas.height), paletteSize);
-    ctx.putImageData(reduced,0,0);
+    // Apply Python-style palette reduction
+    const palette = generatePalette(paletteSize);
+    const newImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const newData = newImageData.data;
+
+    for (let p = 0; p < newData.length; p += 4) {
+        // Map each pixel to the nearest palette color
+        let r = newData[p], g = newData[p + 1], b = newData[p + 2];
+        let minDist = Infinity, nearest = 0;
+        for (let j = 0; j < palette.length; j += 3) {
+            const dr = r - palette[j];
+            const dg = g - palette[j + 1];
+            const db = b - palette[j + 2];
+            const dist = dr * dr + dg * dg + db * db;
+            if (dist < minDist) {
+                minDist = dist;
+                nearest = j;
+            }
+        }
+        newData[p] = palette[nearest];
+        newData[p + 1] = palette[nearest + 1];
+        newData[p + 2] = palette[nearest + 2];
+    }
+
+    ctx.putImageData(newImageData, 0, 0);
 
     return canvas;
 }
