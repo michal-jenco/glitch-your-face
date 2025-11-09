@@ -3,31 +3,54 @@ body {
     background: #0a0a0a;
     color: #eaeaea;
     font-family: 'Roboto', sans-serif;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
 }
 
 .container {
-    max-width: 1000px;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
     text-align: center;
+    padding: 10px;
 }
 
 h1 {
     color: #00ffea;
-    margin-bottom: 20px;
+    margin: 0;
     text-shadow: 0 0 8px #00ffea;
+}
+
+.main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.output {
+    flex: 3;
+    overflow-y: auto;
+    padding: 10px;
+    background: #121212;
+}
+
+.controls {
+    flex: 1;
+    overflow-y: auto;
+    background: #1a1a1a;
+    padding: 10px 20px;
+    border-left: 2px solid #00ffea;
 }
 
 label {
     display: block;
-    margin: 15px 0;
+    margin: 10px 0;
 }
 
 input[type="range"] {
-    margin-left: 10px;
-    vertical-align: middle;
+    width: 100%;
+    margin-top: 5px;
 }
 
 button {
@@ -37,7 +60,7 @@ button {
     font-weight: bold;
     padding: 10px 20px;
     cursor: pointer;
-    transition: all 0.3s;
+    margin-top: 10px;
 }
 
 button:hover {
@@ -48,7 +71,6 @@ button:hover {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    margin-top: 20px;
     justify-content: center;
 }
 
@@ -61,22 +83,6 @@ button:hover {
     border: 1px solid #00ffea;
     border-radius: 8px;
     width: 180px;
-}
-
-.progress-overlay {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 255, 234, 0.2);
-    color: #00ffea;
-    font-weight: bold;
-    padding: 10px 20px;
-    border: 2px solid #00ffea;
-    border-radius: 8px;
-    z-index: 999;
-    backdrop-filter: blur(4px);
-    display: none;
 }
 
 .glitch-card canvas {
@@ -94,9 +100,24 @@ button:hover {
     cursor: pointer;
     border-radius: 4px;
     font-size: 14px;
-    transition: all 0.3s;
 }
 
 .download-btn:hover {
     background: #00b8a9;
+}
+
+.progress-overlay {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 255, 234, 0.2);
+    color: #00ffea;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: 2px solid #00ffea;
+    border-radius: 8px;
+    z-index: 999;
+    backdrop-filter: blur(4px);
+    display: none;
 }
