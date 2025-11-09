@@ -1,5 +1,5 @@
 # glitch-your-face
-A simple website that uses my custom image glitching algorithm to glitch images
+A simple website that uses my custom image glitching algorithm to glitch user-uploaded images
 
 Usually works best on close-up potrraits with smooth gradients and a lot of similar-colored areas. Busy photos usually come out weird.
 But also images of space come out great!
