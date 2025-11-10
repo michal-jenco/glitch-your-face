@@ -162,3 +162,39 @@ document.getElementById('generateBtn').addEventListener('click', async ()=>{
         progressOverlay.style.display='none';
     }
 });
+
+const thumbSlider = document.getElementById('thumbSize');
+const thumbLabel = document.getElementById('thumbSizeValue');
+
+thumbSlider.addEventListener('input', () => {
+    thumbLabel.textContent = thumbSlider.value;
+    document.documentElement.style.setProperty('--thumb-size', thumbSlider.value + 'px');
+});
+
+document.getElementById('randomizeBtn').addEventListener('click', () => {
+    const sliders = document.querySelectorAll('input[type="range"]');
+
+    sliders.forEach(slider => {
+        if (slider.id === 'variantCount') return;   // don't randomize number of images
+        if (slider.id === 'thumbSize') return;   // don't randomize thumb size
+
+        const min = parseFloat(slider.min);
+        const max = parseFloat(slider.max);
+        const step = parseFloat(slider.step || 1);
+
+        let randomValue;
+        if (step < 1) {
+            randomValue = (Math.random() * (max - min) + min).toFixed(1);
+        } else {
+            randomValue = Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        slider.value = randomValue;
+
+        const label = document.getElementById(slider.id + 'Value');
+        if (label) label.textContent = slider.value;
+    });
+
+    // apply thumbnail change immediately
+    document.documentElement.style.setProperty('--thumb-size', thumbSlider.value + 'px');
+});
