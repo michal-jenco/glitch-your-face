@@ -82,11 +82,11 @@ button:hover {
     padding: 10px;
     border: 1px solid #00ffea;
     border-radius: 8px;
-    width: 180px;
+    width: var(--thumb-size, 180px);
 }
 
 .glitch-card canvas {
-    width: 160px;
+    width: calc(var(--thumb-size, 180px) - 20px);
     height: auto;
     border-radius: 4px;
 }
