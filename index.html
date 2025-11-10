@@ -26,12 +26,19 @@
                 <input type="file" id="imageInput" accept="image/*">
             </label>
 
+            <button id="generateBtn">Generate Glitches</button><br>
+
+            <button id="randomizeBtn">Randomize All Parameters</button><br><br>
+
+            <label>
+                Thumbnail Size: <span id="thumbSizeValue">160</span>px
+                <input type="range" id="thumbSize" min="60" max="400" value="160">
+            </label>
+
             <label>
                 Number of Glitch Variants: <span id="variantCountValue">5</span>
                 <input type="range" id="variantCount" min="1" max="50" value="5">
             </label>
-
-            <button id="generateBtn">Generate Glitches</button><br><br>
 
             <label>
                 Palette Size: <span id="paletteSizeValue">4</span>
