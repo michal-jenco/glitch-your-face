@@ -138,9 +138,17 @@ function makeGlitchedFilename(originalFilename) {
         "-" +
         String(now.getMinutes()).padStart(2, "0") +
         "-" +
-        String(now.getSeconds()).padStart(2, "0");
+        String(now.getSeconds()).padStart(2, "0") +
+        "-" +
+        String(now.getMilliseconds()).padStart(3, "0");
 
-    return `${originalFilename}-${timestamp}`;
+    // Extract base name and extension
+    const dotIndex = originalFilename.lastIndexOf(".");
+    const base = dotIndex > 0 ? originalFilename.slice(0, dotIndex) : originalFilename;
+    const ext = dotIndex > 0 ? originalFilename.slice(dotIndex) : "";
+
+    // Return new filename
+    return `${base}-${timestamp}${ext}`;
 }
 
 // Generate button
