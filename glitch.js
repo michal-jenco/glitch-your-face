@@ -124,6 +124,25 @@ function glitchImage(img, i, variantCount, paletteSize) {
     const label = document.getElementById(id+'Value');
     slider.addEventListener('input', ()=>{ label.textContent = slider.value; });
 });
+
+function makeGlitchedFilename(originalFilename) {
+    const now = new Date();
+    const timestamp =
+        now.getFullYear().toString() +
+        "-" +
+        String(now.getMonth() + 1).padStart(2, "0") +
+        "-" +
+        String(now.getDate()).padStart(2, "0") +
+        "-" +
+        String(now.getHours()).padStart(2, "0") +
+        "-" +
+        String(now.getMinutes()).padStart(2, "0") +
+        "-" +
+        String(now.getSeconds()).padStart(2, "0");
+
+    return `${originalFilename}-${timestamp}`;
+}
+
 // Generate button
 document.getElementById('generateBtn').addEventListener('click', async ()=>{
     const fileInput = document.getElementById('imageInput');
@@ -152,7 +171,10 @@ document.getElementById('generateBtn').addEventListener('click', async ()=>{
             btn.addEventListener('click',()=>{
                 const link=document.createElement('a');
                 link.href=canvas.toDataURL();
-                link.download=`glitch-${i}.png`;
+
+                const outputName = makeGlitchedFilename(fileInput.name);
+
+                link.download=`glitch-${outputName}.png`;
                 link.click();
             });
             card.appendChild(btn);
